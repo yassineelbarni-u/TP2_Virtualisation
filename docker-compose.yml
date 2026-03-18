@@ -1,0 +1,30 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb_capteurs
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db 
+
+  backend:
+    build: ./backend
+    container_name: node_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frentend
+    container_name: react_map
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frentend:/app
+      - /app/node_modules
+
+volumes:
+  mongo_data:
