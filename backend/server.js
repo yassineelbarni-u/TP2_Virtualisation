@@ -30,7 +30,8 @@ function LectureCsv(filePath) {
       .on('data', (row) => {
         const latitude = Number(row.latitude);
         const longitude = Number(row.longitude);
-
+        
+        // verifier que latitude et longitude sont valides
         if (!Number.isNaN(latitude) && !Number.isNaN(longitude)) {
           rows.push({
             sensor_id: String(row.sensor_id),
@@ -39,6 +40,7 @@ function LectureCsv(filePath) {
           });
         }
       })
+      // une fois la lecture terminée, retourner les données
       .on('end', () => resolve(rows))
       .on('error', reject);
   });
@@ -48,7 +50,7 @@ async function initDatabase() {
   // Connexion a MongoDB
   mongoClient = new MongoClient(MONGO_URI);
   await mongoClient.connect();
-
+ // selection de la base de données et de la collection
   const db = mongoClient.db(DB_NAME);
   sensorsCollection = db.collection(COLLECTION_NAME);
 
@@ -70,11 +72,11 @@ app.get('/api/capteurs', async (_req, res) => {
     return res.json({ data: sensors });
   } catch (error) {
     console.error('Erreur lecture MongoDB:', error);
-    return res.status(500).json({ error: 'Erreur interne serveur' });
+    return res.status(500).json({ error: 'Erreur  serveur' });
   }
 });
 
-// Fermer la connexion MongoDB à l'arrêt du serveur
+// Fermer la connexion MongoDB a l'arret du serveur
 async function startServer() {
   try {
     await initDatabase();

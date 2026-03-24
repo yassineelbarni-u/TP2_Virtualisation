@@ -3,7 +3,7 @@
 
 Ce projet est une application web simple qui affiche les emplacements de capteurs sur une carte. Il est entièrement conteneurisé avec Docker et utilise un backend Node.js, un frontend React, et une base de données MongoDB.
 
-![Description de l'image](images/capteur.png)
+![Description de l'image](images/screenshootC.png)
 
 ## Architecture
 
